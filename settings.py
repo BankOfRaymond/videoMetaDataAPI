@@ -2,7 +2,7 @@
 
 SERVER_NAME = '127.0.0.1:5000'
 
-HATEOAS = False
+
 
 MONGO_HOST = 'localhost'
 MONGO_PORT = 27017
@@ -18,6 +18,10 @@ RESOURCE_METHODS = ['GET', 'POST', 'DELETE']
 # Enable reads (GET), edits (PATCH) and deletes of individual items
 # (defaults to read-only item access).
 ITEM_METHODS = ['GET', 'PATCH', 'DELETE']
+HATEOAS = False
+hateoas = False
+PAGINATION = True
+DATE_FORMAT = "%Y-%M-%d"
 
 
 schema = {
@@ -76,10 +80,12 @@ people = {
 
     # most global settings can be overridden at resource level
     'resource_methods': ['GET', 'POST'],
-
+     
     'schema': schema
 }
 
+
 DOMAIN = {
     'people': people,
+
 }
