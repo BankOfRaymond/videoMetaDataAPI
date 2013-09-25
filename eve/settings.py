@@ -1,7 +1,5 @@
 
 
-SERVER_NAME = '127.0.0.1:5000'
-
 
 
 MONGO_HOST = 'localhost'
@@ -9,6 +7,8 @@ MONGO_PORT = 27017
 # MONGO_USERNAME = 'user'
 # MONGO_PASSWORD = 'user'
 MONGO_DBNAME = 'apitest'
+SERVER_NAME = '192.168.1.126:5000'
+
 
 # Enable reads (GET), inserts (POST) and DELETE for resources/collections
 # (if you omit this line, the API will default to ['GET'] and provide
@@ -19,7 +19,7 @@ RESOURCE_METHODS = ['GET', 'POST', 'DELETE']
 # (defaults to read-only item access).
 ITEM_METHODS = ['GET', 'PATCH', 'DELETE']
 HATEOAS = False
-hateoas = False
+
 PAGINATION = True
 DATE_FORMAT = "%Y-%M-%d"
 
@@ -79,7 +79,7 @@ people = {
     'cache_expires': 10,
 
     # most global settings can be overridden at resource level
-    'resource_methods': ['GET', 'POST'],
+    #'resource_methods': ['GET', 'POST'],
      
     'schema': schema
 }
