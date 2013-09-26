@@ -14,7 +14,7 @@
     <link href="dist/css/bootstrap.css" rel="stylesheet">
 
     <!-- Custom styles for this template -->
-    <link href="navbar.css" rel="stylesheet">
+    <!-- <link href="navbar.css" rel="stylesheet"> -->
 
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
@@ -68,8 +68,37 @@
         <h1>Video MetaData API</h1>
         <p>This example is a quick exercise to illustrate how the default, static navbar and fixed to top navbar work. It includes the responsive CSS and HTML, so it also adapts to your viewport and device.</p>
         <p>
+        <p id="data">
+
+        </p>
           <a class="btn btn-lg btn-primary" href="../../components/#navbar">View navbar docs &raquo;</a>
         </p>
+        <p>
+          <a class="btn btn-lg btn-primary" onclick =testFunction() >Test Function &raquo;</a>
+        </p>
+        <script>
+          console.log("HELLO");
+
+          function testFunction(){
+            alert("Hello World!");
+          }
+          function httpGet(theUrl)
+          {
+            var xmlHttp = null;
+
+            xmlHttp = new XMLHttpRequest();
+            xmlHttp.open( "GET", theUrl, false );
+            xmlHttp.send( null );
+            return xmlHttp.responseText;
+          }
+          //console.log(httpGet("http://192.168.1.131:5000"))
+
+          document.getElementById("data").innerHTML="DATA SECTION";
+
+
+        </script>
+
+
       </div>
 
     </div> <!-- /container -->
@@ -78,7 +107,7 @@
     <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
-    <script src="../../assets/js/jquery.js"></script>
+    <script src="dist/js/jquery.js"></script>
     <script src="dist/js/bootstrap.min.js"></script>
   </body>
 </html>
