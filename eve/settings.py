@@ -7,7 +7,7 @@ MONGO_PORT = 27017
 # MONGO_USERNAME = 'user'
 # MONGO_PASSWORD = 'user'
 MONGO_DBNAME = 'apitest'
-SERVER_NAME = '192.168.1.126:5000'
+SERVER_NAME = '192.168.1.131:5000'
 
 
 # Enable reads (GET), inserts (POST) and DELETE for resources/collections
@@ -21,52 +21,45 @@ ITEM_METHODS = ['GET', 'PATCH', 'DELETE']
 HATEOAS = False
 
 PAGINATION = True
-DATE_FORMAT = "%Y-%M-%d"
+DATE_FORMAT = "%Y-%m-%d-%H%M"
 
 
 
 
-schema = {
-    # Schema definition, based on Cerberus grammar. Check the Cerberus project
-    # (https://github.com/nicolaiarocci/cerberus) for details.
-    # 'upload_date': {
-    #     'type': 'datetime'
-    # },
-    # 'release_date': {
-    #     'type': 'datetime'
-    # },
-    # 'brand': {
-    #     'type': 'string',
-    #     'minlength': 1,
-    #     'maxlength': 15,
-    #     # 'required': True
-    # },
-    'video_id': {
-        'type': 'string',
-        'minlength': 1,
-        'maxlength': 15,
-        'required': True,
-        # talk about hard constraints! For the purpose of the demo
-        # 'lastname' is an API entry-point, so we need it to be unique.
-        'unique': True,
-    },
-    # # 'role' is a list, and can only contain values from 'allowed'.
-    # 'role': {
-    #     'type': 'list',
-    #     'allowed': ["author", "contributor", "copy"],
-    # },
-    # # An embedded 'strongly-typed' dictionary.
-    # 'location': {
-    #     'type': 'dict',
-    #     'schema': {
-    #         'address': {'type': 'string'},
-    #         'city': {'type': 'string'}
-    #     },
-    # },
-    # 'born': {
-    #     'type': 'datetime',
-    # },
-}
+schema = { 
+        'release_date': {
+            'type': 'datetime'
+        },
+        "ovp":{
+            "type": "list",
+            "items": {
+                "video_source": {"type":"string"},
+                "video_id": {"type": "string"}
+            }
+        },
+        "brand": {
+            "type": "string",
+            "minlength": 1,
+            "maxlength": 15,
+            "required": True,
+            #'unique': True,
+        },
+        "category":{
+            "type": "string",
+        },
+        "content":{
+            "type":"list",
+            "items":{
+                "language"  : {"type": "string"},
+                "title"     : {"type": "string"},
+                "tags"      : {
+                                "type": "list",
+                                "items":{ "tag": {"type": "string"} }
+                            },
+                "description": {"type": "string"}            
+            }
+        }
+    }
 
 video = {
     # 'title' tag used in item links. Defaults to the resource title minus
@@ -79,7 +72,8 @@ video = {
     # GET requests at '/people/<lastname>/'.
     'additional_lookup': {
         'url': '[\w]+',
-        'field': 'video_id'
+        #'field': 'video_id',
+        'field': 'brand',
     },
 
     # We choose to override global cache-control directives for this resource.
