@@ -22,6 +22,7 @@ var eveResponse = JSON.parse('<?php Print($json); ?>');
   <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" />
   <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
   <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+  <link rel="stylesheet" href="videoMetaDataApi.css" />
   <!-- <link rel="stylesheet" href="/resources/demos/style.css" /> -->
   <script>
   $(function() {
@@ -78,41 +79,58 @@ var eveResponse = JSON.parse('<?php Print($json); ?>');
 
   for (var i=0;i<eveResponse._items.length;i++){
 
-    console.log(eveResponse._items);
+    var info = eveResponse._items[i];
+
+    console.log(info);
     var h3 = document.createElement("h3");
 
     var title = "";   //Sets title
-    if (eveResponse._items[i].content.length > 0){
-      for (item in eveResponse._items[i].content){
-        if (eveResponse._items[i].content[item].language == "English"){
-          title = eveResponse._items[i].content[item]["title"]
+    if (info.content.length > 0){
+      for (item in info.content){
+        if (info.content[item].language == "English"){
+          title = info.content[item]["title"]
         }
       }
     }
     
-    var h3Text = document.createTextNode(title); //  +" "+ eveResponse._items[i]._id);
+    var h3Text = document.createTextNode(title); //  +" "+ info._id);
     h3.appendChild(h3Text);
     document.getElementById("accordion").appendChild(h3);
 
     var div = document.createElement("div");
-    
-    for (var key in eveResponse._items[i]){
+
+    for (var key in info){
       var pElemInDiv = document.createElement('p');
-
-      if (typeof(eveResponse._items[i][key]) == "object"){
-        //div.appendChild(addObject(eveResponse._items[i][key]));
-        //addObject(eveResponse._items[i][key])
-
-        
+      if (typeof(info[key]) == "object"){
+        //div.appendChild(addObject(info[key]));
+        //addObject(info[key])
       }
       else{
-        var responseText = document.createTextNode(key+': '+eveResponse._items[i][key]);
+        var responseText = document.createTextNode(key+': '+info[key]);
         pElemInDiv.appendChild(responseText);
         div.appendChild(pElemInDiv);
       }
-      
-
     }
+
+    //OVP
+    var ovpContainer = document.createElement("ovp");
+    for (var j=0;j<info.ovp.length;j++){
+      var pVideoSource = document.createElement("p");
+      pVideoSource.appendChild(document.createTextNode("video_source: " + info.ovp[j]['video_source']));
+ 
+      var pVideoId = document.createElement("p");
+      pVideoId.appendChild(document.createTextNode("video_id: "+info.ovp[j]['video_id'] ));
+
+      ovpContainer.appendChild(pVideoSource);
+      ovpContainer.appendChild(pVideoId);
+    }
+    div.appendChild(ovpContainer);
+
+    //Link
+ 
+    var link = document.createElement("p");
+    link.appendChild(document.createTextNode("Link: http://"+ info._links.self.href));
+    div.appendChild(link);
 
     document.getElementById("accordion").appendChild(div);
 
