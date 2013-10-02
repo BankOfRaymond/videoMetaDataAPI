@@ -1,5 +1,3 @@
-<!doctype html>
- 
 <?php
 error_reporting(E_ALL);
 ini_set('display_errors', True);
@@ -44,27 +42,67 @@ var eveResponse = JSON.parse('<?php Print($json); ?>');
 
 <script>
   
-  function addObject(object){
+/*  function addObject(object){
+
+    var nodeToReturn = document.createElement("p");
+
     console.log("in add object");
-    console.log(object);
-  }
+    for (var i=0; i<object.length; i++){
+
+      dictionary = object[i];
+
+      for (item in dictionary){
+        console.log(item + " " + dictionary[item]);
+        if (dictionary[item] instanceof Array){
+          //addObject(dictionary[item]);
+        }
+        else{
+          var text = document.createTextNode(item + ": " + dictionary[item]);
+
+          nodeToReturn.appendChild(text);
+
+
+        }
+      }
+
+
+    //var text = document.createTextNode("In Object");
+    //nodeToReturn.appendChild(text);
+    console.log(nodeToReturn);
+    return nodeToReturn;
+    }
+  }*/
+
+
+
 
   for (var i=0;i<eveResponse._items.length;i++){
 
+    console.log(eveResponse._items);
     var h3 = document.createElement("h3");
-    var h3Text = document.createTextNode(eveResponse._items[i].content[0].title  +" "+ eveResponse._items[i]._id);
+
+    var title = "";   //Sets title
+    if (eveResponse._items[i].content.length > 0){
+      for (item in eveResponse._items[i].content){
+        if (eveResponse._items[i].content[item].language == "English"){
+          title = eveResponse._items[i].content[item]["title"]
+        }
+      }
+    }
+    
+    var h3Text = document.createTextNode(title); //  +" "+ eveResponse._items[i]._id);
     h3.appendChild(h3Text);
     document.getElementById("accordion").appendChild(h3);
 
     var div = document.createElement("div");
     
-    //THIS CAN BE ITS OWN CLASS
     for (var key in eveResponse._items[i]){
       var pElemInDiv = document.createElement('p');
 
       if (typeof(eveResponse._items[i][key]) == "object"){
         //div.appendChild(addObject(eveResponse._items[i][key]));
-        addObject(eveResponse._items[i][key])
+        //addObject(eveResponse._items[i][key])
+
         
       }
       else{
