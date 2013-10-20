@@ -1,0 +1,4 @@
+Installed MongoDB
+pip install eve
+ufw ports open
+	5000
