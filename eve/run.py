@@ -1,7 +1,8 @@
 from eve import Eve
 port = 5000
-host = '192.168.1.131'
-
+#host = 'videometadataapi.pimovi.com'
+#host = '54.214.42.17'
+host = 'ec2-54-214-42-17.us-west-2.compute.amazonaws.com'
 
 app = Eve()
 

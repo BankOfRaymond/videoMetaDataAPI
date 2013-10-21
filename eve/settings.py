@@ -1,14 +1,11 @@
 
-
-
-
 MONGO_HOST = 'localhost'
 MONGO_PORT = 27017
 # MONGO_USERNAME = 'user'
 # MONGO_PASSWORD = 'user'
 MONGO_DBNAME = 'apitest'
-SERVER_NAME = '192.168.1.131:5000'
-
+#SERVER_NAME = 'videometadataapi.pimovi.com:5000'
+SERVER_NAME = 'ec2-54-214-42-17.us-west-2.compute.amazonaws.com:5000'
 
 # Enable reads (GET), inserts (POST) and DELETE for resources/collections
 # (if you omit this line, the API will default to ['GET'] and provide
