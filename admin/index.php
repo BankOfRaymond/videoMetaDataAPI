@@ -2,7 +2,7 @@
 error_reporting(E_ALL);
 ini_set('display_errors', True);
 
-$url = 'http://192.168.1.131:5000/video/';
+$url = 'http://127.0.0.1:5000/';
 
 $json = file_get_contents($url);
   //print $json;
