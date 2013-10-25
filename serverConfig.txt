@@ -16,5 +16,31 @@ ufw ports open
 
 
 Installing Mongo PHP module
-	apt-get install php5-dev
+	Access MongoDB from PHP
+	To access MongoDB from PHP you need:
 
+	The MongoDB server running. The server is the “mongod” file, not the “mongo” client (note the “d” at the end).
+	The MongoDB PHP driver installed.
+	Install the PHP Driver
+	*NIX
+	Run:
+
+	sudo pecl install mongo
+	Open your php.ini file and add to it:
+
+	extension=mongo.so
+	It is recommended to add this to the section with the other “extensions,” but it will work from anywhere within the php.ini file.
+
+	Restart your web server (Apache, nginx, etc.) for the change to take effect.
+
+	See the installation docs for configuration information and OS-specific installation instructions.
+
+	Note pecl requires that pear be installed. For those using apt-get, you may need to run the following:
+	sudo apt-get install php5-dev php5-cli php-pear
+	Windows
+	Download the correct driver for your environment from <https://s3.amazonaws.com/drivers.mongodb.org/php/index.html>. Thread safe builds are used when running PHP as an Apache module (typical installation); non-thread safe builds, which include “nts” in the filename, are used for CGI.
+	Unzip and add the appropriate php_mongo.dll file to your PHP extensions directory (usually the ext folder in your PHP installation).
+	Add to your php.ini:
+	extension=php_mongo.dll
+	Restart your web server (Apache, IIS, etc.) for the change to take effect.
+	For more information, see the Windows section of the installation docs.
