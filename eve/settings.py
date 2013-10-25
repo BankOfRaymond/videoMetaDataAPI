@@ -3,7 +3,7 @@ MONGO_HOST = 'localhost'
 MONGO_PORT = 27017
 # MONGO_USERNAME = 'user'
 # MONGO_PASSWORD = 'user'
-MONGO_DBNAME = 'apitest'
+MONGO_DBNAME = 'video_metadata_api'
 #SERVER_NAME = 'videometadataapi.pimovi.com:5000'
 SERVER_NAME = 'ec2-54-214-42-17.us-west-2.compute.amazonaws.com:5000'
 
