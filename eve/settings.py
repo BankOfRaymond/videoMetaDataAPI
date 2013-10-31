@@ -4,8 +4,10 @@ MONGO_PORT = 27017
 # MONGO_USERNAME = 'user'
 # MONGO_PASSWORD = 'user'
 MONGO_DBNAME = 'video_metadata_api'
-#SERVER_NAME = 'videometadataapi.pimovi.com:5000'
+
+
 SERVER_NAME = 'ec2-54-214-42-17.us-west-2.compute.amazonaws.com:5000'
+#SERVER_NAME = '127.0.0.1'
 
 # Enable reads (GET), inserts (POST) and DELETE for resources/collections
 # (if you omit this line, the API will default to ['GET'] and provide
@@ -15,11 +17,11 @@ RESOURCE_METHODS = ['GET', 'POST', 'DELETE']
 # Enable reads (GET), edits (PATCH) and deletes of individual items
 # (defaults to read-only item access).
 ITEM_METHODS = ['GET', 'PATCH', 'DELETE']
-HATEOAS = False
+# HATEOAS = False
 
 PAGINATION = True
 DATE_FORMAT = "%Y-%m-%d-%H%M"
-
+DEBUG = True
 
 
 
@@ -27,33 +29,41 @@ schema = {
         'release_date': {
             'type': 'datetime'
         },
-        "ovp":{
-            "type": "list",
-            "items": {
-                "video_source": {"type":"string"},
-                "video_id": {"type": "string"}
-            }
+        'ovp':{
+            'type': 'string',
         },
-        "brand": {
-            "type": "string",
-            "minlength": 1,
-            "maxlength": 15,
-            "required": True,
-            #'unique': True,
+        'video_length':{
+            'type': 'int'
         },
-        "category":{
-            "type": "string",
+        'views':{
+            'type': 'int'
         },
-        "content":{
-            "type":"list",
-            "items":{
-                "language"  : {"type": "string"},
-                "title"     : {"type": "string"},
-                "tags"      : {
-                                "type": "list",
-                                "items":{ "tag": {"type": "string"} }
+        'premium':{
+            'type': 'boolean'
+        },
+        'promoted':{
+            'type': 'boolean'
+        },
+        'brand': {
+            'type': 'string',
+            'minlength': 1,
+            'maxlength': 15,
+            'required': True,
+        },
+        'category':{
+            'type': 'string',
+        }
+        ,
+        'content':{
+            'type':'list',
+            'items':{
+                'language'  : {'type': 'string'},
+                'title'     : {'type': 'string'},
+                'tags'      : {
+                                'type': 'list',
+                                'items':{ 'tag': {'type': 'string'} }
                             },
-                "description": {"type": "string"}            
+                'description': {'type': 'string'}            
             }
         }
     }

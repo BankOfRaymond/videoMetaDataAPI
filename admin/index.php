@@ -1,15 +1,112 @@
 <?php
-error_reporting(E_ALL);
-ini_set('display_errors', True);
 
-$url = 'http://127.0.0.1:5000/';
+$url = 'http://ec2-54-214-42-17.us-west-2.compute.amazonaws.com:5000/video/';
+ 	
+	error_reporting(E_ALL);
+	ini_set('display_errors', True);
+/*	$url = 'http://ec2-54-214-42-17.us-west-2.compute.amazonaws.com:5000/video/';
+	$json = file_get_contents($url);
+	//print $json;
+*/
 
-$json = file_get_contents($url);
-  //print $json;
 ?>
+<table>
+<?php 
+
+/*foreach ($_POST as $key => $value) {
+    echo "<tr>";
+    echo "<td>";
+    echo $key;
+    echo "</td>";
+    echo "<td>";
+    echo $value;
+    echo "</td>";
+    echo "</tr>";
+}
+
+$jsonToSend = utf8_encode(json_encode($_POST));
+
+print $jsonToSend;
+print "<br><br>";
+    
+$ch = curl_init('http://ec2-54-214-42-17.us-west-2.compute.amazonaws.com:5000/video/'); 
+
+
+curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");                                                                     
+curl_setopt($ch, CURLOPT_POSTFIELDS, $jsonToSend);                                                                    
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);                                                                      
+curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+    //'Accept: application/json',                                                                       
+    //'Content-Type: application/json',
+    'Content-Type: application/x-www-form-urlencoded',
+    'Accept-Encoding: gzip,deflate,sdch',                                                                               
+    'Content-Length: ' . strlen($jsonToSend))                                                                       
+);                 
+
+$result = curl_exec($ch);
+
+print $result;*/
+
+?>
+</table>
+
+
+<?php //HOW TO MAKE REST CALLS IN PHP
+
+//next example will insert new conversation
+$service_url = $url;
+$curl = curl_init($service_url);
+$curl_post_data = array(
+        "brand" => "Raymond"
+        /*'message' => 'test message',
+        'useridentifier' => 'agent@example.com',
+        'department' => 'departmentId001',
+        'subject' => 'My first conversation',
+        'recipient' => 'recipient@example.com',
+        'apikey' => 'key001'*/
+);
+
+
+
+$curl_post_data = 'item1={    "release_date": "2014-02-01-1541",   "brand": "Serena" }';
+
+print ($curl_post_data);
+
+print "<br><br>";
+curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+curl_setopt($curl, CURLOPT_HTTPHEADER, array(                                                                                                                                       
+    'Content-Type: application/x-www-form-urlencoded'  
+));
+curl_setopt($curl, CURLOPT_POST, true);
+curl_setopt($curl, CURLOPT_POSTFIELDS, $curl_post_data);
+$curl_response = curl_exec($curl);
+if ($curl_response === false) {
+    $info = curl_getinfo($curl);
+    curl_close($curl);
+    die('error occured during curl exec. Additioanl info: ' . var_export($info));
+}
+curl_close($curl);
+$decoded = json_decode($curl_response);
+
+print $curl_response;
+
+print "<br><br>";
+if (isset($decoded->response->status) && $decoded->response->status == 'ERROR') {
+    die('error occured: ' . $decoded->response->errormessage);
+}
+echo 'response ok!';
+var_export($decoded->response);
+
+
+
+
+//END HOW TO MAKE REST CALLS IN PHP ?>
+
+
+
 
 <script type="text/javascript">
-var eveResponse = JSON.parse('<?php Print($json); ?>');
+//var eveResponse = JSON.parse('<?php Print($json); ?>');
 //console.log(eveResponse);
 
 </script>
@@ -18,7 +115,7 @@ var eveResponse = JSON.parse('<?php Print($json); ?>');
 <html lang="en">
 <head>
   <meta charset="utf-8" />
-  <title>jQuery UI Accordion - Default functionality</title>
+  <title>Camfusion Video Meta Data API</title>
   <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" />
   <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
   <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
@@ -42,102 +139,60 @@ var eveResponse = JSON.parse('<?php Print($json); ?>');
 </html>
 
 <script>
-  
-/*  function addObject(object){
 
-    var nodeToReturn = document.createElement("p");
-
-    console.log("in add object");
-    for (var i=0; i<object.length; i++){
-
-      dictionary = object[i];
-
-      for (item in dictionary){
-        console.log(item + " " + dictionary[item]);
-        if (dictionary[item] instanceof Array){
-          //addObject(dictionary[item]);
-        }
-        else{
-          var text = document.createTextNode(item + ": " + dictionary[item]);
-
-          nodeToReturn.appendChild(text);
+function addElement(name, data){
+  var tr = document.createElement("tr");
+  var td1 = document.createElement("td");
+  var tdTitle = document.createTextNode(name +":  ");
+  td1.appendChild(tdTitle);
+  var td2 = document.createElement("td");
+  var tdData  = document.createElement("input");
+  tdData.setAttribute("type", "text");
+  tdData.setAttribute("value", data);
+  tdData.setAttribute("name", name);
+  td2.appendChild(tdData);
+  tr.appendChild(td1);
+  tr.appendChild(td2);
+  return tr
+}
 
 
-        }
-      }
+var h3 = document.createElement("h3");
+var addElementTitle = document.createTextNode("Video To Add");
+h3.appendChild(addElementTitle);
+document.getElementById("accordion").appendChild(h3);
+var div = document.createElement("div");
+
+var videoData = document.createElement("form");
+videoData.setAttribute("action","index.php");
+videoData.setAttribute("method", "post");
+var table = document.createElement("table");
+
+table.appendChild(addElement("brand", ''));
+table.appendChild(addElement("release_date", ''));
+table.appendChild(addElement("ovp", ''));
+table.appendChild(addElement("views", ''));
+table.appendChild(addElement("video_length", ''));
+table.appendChild(addElement("premium", ''));
+table.appendChild(addElement("promoted", ''));
+table.appendChild(addElement("category", ''));
+
+//table.appendChild(addElement("created", ''));
+//table.appendChild(addElement("etag", ''));
+table.appendChild(addElement("content", ''));
 
 
-    //var text = document.createTextNode("In Object");
-    //nodeToReturn.appendChild(text);
-    console.log(nodeToReturn);
-    return nodeToReturn;
-    }
-  }*/
+
+var submitButton = document.createElement("input");
+submitButton.setAttribute("type", "submit");
+submitButton.setAttribute("value", "Add");
+table.appendChild(submitButton);
 
 
 
-
-  for (var i=0;i<eveResponse._items.length;i++){
-
-    var info = eveResponse._items[i];
-
-    console.log(info);
-    var h3 = document.createElement("h3");
-
-    var title = "";   //Sets title
-    if (info.content.length > 0){
-      for (item in info.content){
-        if (info.content[item].language == "English"){
-          title = info.content[item]["title"]
-        }
-      }
-    }
-    
-    var h3Text = document.createTextNode(title); //  +" "+ info._id);
-    h3.appendChild(h3Text);
-    document.getElementById("accordion").appendChild(h3);
-
-    var div = document.createElement("div");
-
-    for (var key in info){
-      var pElemInDiv = document.createElement('p');
-      if (typeof(info[key]) == "object"){
-        //div.appendChild(addObject(info[key]));
-        //addObject(info[key])
-      }
-      else{
-        var responseText = document.createTextNode(key+': '+info[key]);
-        pElemInDiv.appendChild(responseText);
-        div.appendChild(pElemInDiv);
-      }
-    }
-
-    //OVP
-    var ovpContainer = document.createElement("ovp");
-    for (var j=0;j<info.ovp.length;j++){
-      var pVideoSource = document.createElement("p");
-      pVideoSource.appendChild(document.createTextNode("video_source: " + info.ovp[j]['video_source']));
- 
-      var pVideoId = document.createElement("p");
-      pVideoId.appendChild(document.createTextNode("video_id: "+info.ovp[j]['video_id'] ));
-
-      ovpContainer.appendChild(pVideoSource);
-      ovpContainer.appendChild(pVideoId);
-    }
-    div.appendChild(ovpContainer);
-
-    //Link
- 
-    var link = document.createElement("p");
-    link.appendChild(document.createTextNode("Link: http://"+ info._links.self.href));
-    div.appendChild(link);
-
-    document.getElementById("accordion").appendChild(div);
-
-  }
-
-
-  
-
+videoData.appendChild(table);
+div.appendChild(videoData);
+document.getElementById("accordion").appendChild(div);
 
 </script>
+

@@ -13,7 +13,8 @@ pip install eve
 ufw ports open
 	5000
 
-
+CURL PHP Module
+	sudo apt-get install php5-curl
 
 Installing Mongo PHP module
 	Access MongoDB from PHP
